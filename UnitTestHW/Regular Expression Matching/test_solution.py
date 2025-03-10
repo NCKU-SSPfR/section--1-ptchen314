@@ -1,8 +1,9 @@
-import ...
-from ...
+import pytest
+from solution import Solution
 
 @pytest.fixture
-...
+def solution():
+    return Solution()
     
 testcases = [
     # s, p, expected_res
@@ -15,12 +16,13 @@ testcases = [
     ["aaa", "ab*a*c*a", True]
 ]
 
-@pytest.mark.parametrize([?], testcases)
-...
+@pytest.mark.parametrize(["s", "p", "expected"], testcases)
+def test_solution(solution, s, p, expected):
     assert solution.isMatch(s, p) == expected
+#     Tell me why
+# I never wanna hear you say
+# I want it that way
 
-"""
 @pytest.mark.xfail
 def test_broken_solution(solution):
-    assert solution.isMatch() == 
-"""
+    assert solution.isMatch("mississippi", "mis*is*p*.") == False
