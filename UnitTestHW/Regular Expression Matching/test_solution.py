@@ -25,4 +25,4 @@ def test_solution(solution, s, p, expected):
 
 @pytest.mark.xfail
 def test_broken_solution(solution):
-    assert solution.isMatch("mississippi", "mis*is*p*.") == False
+    assert solution.isMatch("mississippi", "mis*is*p*.") == True
