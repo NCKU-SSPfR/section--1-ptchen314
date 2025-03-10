@@ -50,25 +50,14 @@ def _load_maze_from_json(maze_level_name):
 
 def hit_obstacle(position, maze_level_name):
     x, y = position
-    maze_data = _load_maze_from_json(maze_level_name)  # You can replace this with the actual level you're working with
+    maze_data = _load_maze_from_json(maze_level_name)
     grid = maze_data["map"]
     
     # Check if the position is within the bounds of the grid
     if 0 <= x < grid.shape[0] and 0 <= y < grid.shape[1]:
-        # Return True if there's an obstacle (1) at the position, False if free space (0)
         return grid[y, x] == 1
-    else:
-        # Position is out of bounds
-        return True
+    return True
 
-def hit_obstacle_again_and_again():
-    while True:
-        hit_obstacle(hahahahaha, 995)
-        while True:
-            hit_obstacle(hahahahaha, 995)
-            while True:
-                hit_obstacle_again_and_again()
-    
 def game_over(health):
     if health == 0 or health == 666:
         return True
