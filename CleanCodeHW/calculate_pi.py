@@ -1,24 +1,22 @@
 import random
 
-# Constant settings
-RADIUS = 1
-NUM_POINTS = 1000000
-AREA_FACTOR = 4
-SQUARE_EXPONENT = 2
-POINT_COUNT_INCREMENT = 1
-INSIDE_CIRCLE_COUNT = 0
-Y_RANGE = 1
-Y_SQUARE_EXPONENT = 2
-
+# Simulation parameters
+CIRCLE_RADIUS = 1
+TOTAL_SIMULATION_POINTS = 1000000
+CIRCLE_TO_SQUARE_RATIO = 4
+SQUARE_POWER = 2
+POINT_IN_CIRCLE_INCREMENT = 1
+POINTS_IN_CIRCLE = 0
+COORDINATE_RANGE = 1
 
 # Randomly generate points and count those inside the circle
-for _ in range(NUM_POINTS):
-    x = random.uniform(-RADIUS, RADIUS)
-    y = random.uniform(-Y_RANGE, Y_RANGE)
-    if x**SQUARE_EXPONENT + y**Y_SQUARE_EXPONENT <= RADIUS**SQUARE_EXPONENT:
-        INSIDE_CIRCLE_COUNT += POINT_COUNT_INCREMENT
+for _ in range(TOTAL_SIMULATION_POINTS):
+    point_x = random.uniform(-CIRCLE_RADIUS, CIRCLE_RADIUS)
+    point_y = random.uniform(-COORDINATE_RANGE, COORDINATE_RANGE)
+    if point_x**SQUARE_POWER + point_y**SQUARE_POWER <= CIRCLE_RADIUS**SQUARE_POWER:
+        POINTS_IN_CIRCLE += POINT_IN_CIRCLE_INCREMENT
 
 # Estimate pi based on the number of points inside the circle
-PI_ESTIMATE = (INSIDE_CIRCLE_COUNT / NUM_POINTS) * AREA_FACTOR
+estimated_pi = (POINTS_IN_CIRCLE / TOTAL_SIMULATION_POINTS) * CIRCLE_TO_SQUARE_RATIO
 
-print(f"Estimated value of pi is: {PI_ESTIMATE}")
+print(f"Estimated value of pi is: {estimated_pi}")
