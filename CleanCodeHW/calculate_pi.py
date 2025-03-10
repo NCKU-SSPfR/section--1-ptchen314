@@ -6,17 +6,19 @@ NUM_POINTS = 1000000
 AREA_FACTOR = 4
 SQUARE_EXPONENT = 2
 POINT_COUNT_INCREMENT = 1
+INSIDE_CIRCLE_COUNT = 0
+Y_RANGE = 1
+Y_SQUARE_EXPONENT = 2
 
-inside_circle = 0
 
 # Randomly generate points and count those inside the circle
 for _ in range(NUM_POINTS):
     x = random.uniform(-RADIUS, RADIUS)
-    y = random.uniform(-1, 1)
-    if x**SQUARE_EXPONENT + y**2 <= RADIUS**SQUARE_EXPONENT:
-        inside_circle += POINT_COUNT_INCREMENT
+    y = random.uniform(-Y_RANGE, Y_RANGE)
+    if x**SQUARE_EXPONENT + y**Y_SQUARE_EXPONENT <= RADIUS**SQUARE_EXPONENT:
+        INSIDE_CIRCLE_COUNT += POINT_COUNT_INCREMENT
 
 # Estimate pi based on the number of points inside the circle
-pi_neapple = (inside_circle / NUM_POINTS) * AREA_FACTOR
+PI_ESTIMATE = (INSIDE_CIRCLE_COUNT / NUM_POINTS) * AREA_FACTOR
 
-print(f"Estimated value of pi is: {pi_neapple}")
+print(f"Estimated value of pi is: {PI_ESTIMATE}")
