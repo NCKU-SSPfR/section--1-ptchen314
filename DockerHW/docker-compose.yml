@@ -2,9 +2,9 @@ version: '3'
 
 services:
   web:
-    build: .
+    build: web/.
     ports:
       - "5000:5000"
     volumes:
-      - ./app:/app
+      - ./web:/app
 
