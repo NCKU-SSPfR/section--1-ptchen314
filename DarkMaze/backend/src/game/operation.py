@@ -6,42 +6,36 @@ def move_location(game_state, direction):
         return game_state
     
     x, y = game_state["current_position"]
-    map_width = game_state["map_size"][0]
-    map_height = game_state["map_size"][1]
     
     # Update position based on direction
-    moves = {
-        "up": (0, -1),
-        "down": (0, 1),
-        "left": (-1, 0),
-        "right": (1, 0)
-    }
-    
-    if direction in moves:
-        dx, dy = moves[direction]
-        new_x = x + dx
-        new_y = y + dy
-        
-        if 0 <= new_x < map_width and 0 <= new_y < map_height:
-            new_position = [new_x, new_y]
-            
-            if hit_obstacle(new_position, game_state["current_level_name"]):
-                game_state["health"] -= 1
-            else:
-                if new_position not in game_state["path"]:
-                    game_state["path"].append(new_position)
-                game_state["current_position"] = new_position
+    if direction == "up" and y > 0:
+        y -= 1
+    elif direction == "down" and y < game_state["map_size"][1] - 1:
+        y += 1
+    elif direction == "left" and x > 0:
+        x -= 1
+    elif direction == "right" and x < game_state["map_size"][0] - 1:
+        x += 1
 
-            if arrive_at_destination(game_state["current_level_name"], game_state["current_position"]):
-                game_state["health"] = 666
+    new_position = [x, y]
 
-            save_game_state(
-                game_state['username'],
-                game_state["current_level_name"],
-                game_state["map_size"],
-                game_state["health"],
-                game_state["path"],
-                game_state["current_position"]
-            )
-    
+    if hit_obstacle(tuple(new_position), game_state["current_level_name"]):
+        # Update health
+        game_state["health"] -= 1
+    else:
+        # Update path
+        if new_position not in game_state["path"]:
+            game_state["path"].append(new_position)
+
+        # Update position
+        game_state["current_position"] = new_position
+
+    if arrive_at_destination(game_state["current_level_name"], game_state["current_position"]):
+        # Game won
+        game_state["health"] = 666
+
+    # Update database
+    save_game_state(game_state['username'], game_state["current_level_name"], game_state["map_size"],
+                    game_state["health"], game_state["path"], game_state["current_position"])
+
     return game_state

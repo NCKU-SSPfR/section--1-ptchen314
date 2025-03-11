@@ -1,23 +1,20 @@
 import sqlite3
 import json
-from contextlib import closing
 
-def get_db_connection():
-    return sqlite3.connect("game.db")
+conn = sqlite3.connect("game.db")
+cursor = conn.cursor()
 
 def create_user(username):
     """Create user and initialize game state"""
-    with closing(get_db_connection()) as conn:
-        with closing(conn.cursor()) as cursor:
-            try:
-                cursor.execute("""
-                    INSERT INTO game_state (username, current_level_name, map_size, health, path, current_position)
-                    VALUES (?, ?, ?, ?, ?, ?)
-                """, (username, "maze-level-1", json.dumps([10, 10]), 3, json.dumps([[1, 0]]), json.dumps([1, 0])))
-                conn.commit()
-                print(f"User {username} has been created and game state initialized!")
-            except sqlite3.IntegrityError:
-                print(f"User {username} already exists, no need to create!")
+    try:
+        cursor.execute("""
+            INSERT INTO game_state (username, current_level_name, map_size, health, path, current_position)
+            VALUES (?, ?, ?, ?, ?, ?)
+        """, (username, "maze-level-1", json.dumps([10, 10]), 3, json.dumps([[1, 0]]), json.dumps([1, 0])))
+        conn.commit()
+        print(f"User {username} has been created and game state initialized!")
+    except sqlite3.IntegrityError:
+        print(f"User {username} already exists, no need to create!")
 
 def reset_game_state(username):
     """Reset game state (if user exists, reset their state)"""
